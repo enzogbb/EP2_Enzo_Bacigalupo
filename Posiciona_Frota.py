@@ -1,0 +1,47 @@
+def define_posicoes(posicionamento):
+    linha = posicionamento["linha"]
+    coluna = posicionamento["coluna"]
+    orientacao = posicionamento["orientacao"]
+    tamanho = posicionamento["tamanho"]
+
+    posicao = []
+
+    if orientacao == "vertical":
+        for i in range(linha, linha + tamanho):
+            posicao.append([i, coluna])
+    elif orientacao == "horizontal":
+        for j in range(coluna, coluna + tamanho):
+            posicao.append([linha, j])
+
+    return posicao
+
+def preenche_frota(posicionamento, nome_navio, frota):
+    posicao = define_posicoes(posicionamento)
+
+    nova_embarcacao = {
+        "tipo": nome_navio,
+        "posicoes": posicao
+    }
+
+    frota.append(nova_embarcacao)
+    return frota
+
+def faz_jogada(tabuleiro, linha, coluna):
+    if tabuleiro[linha][coluna] == 1:
+        tabuleiro[linha][coluna] = 'X'
+    else:
+        tabuleiro[linha][coluna] = '-'
+    return tabuleiro
+
+def posiciona_frota(frota):
+    grid = [[0] * 10 for _ in range(10)]
+
+    for navio in frota:
+        tipo_navio = navio["tipo"]
+        posicao = navio["posicoes"]
+
+        for pos_grid in posicao:
+            linha, coluna = pos_grid
+            grid[linha][coluna] = 1
+
+    return grid
